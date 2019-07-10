@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+# Prints project-root path into stdout.
+# - If directory has README.* file, the directory is considered as root.
+# If root not found, prints "/".
+
+def get_root_dir(dir)
+    # if dir has README.*, it is considered as root directory.
+    if (Dir.glob('README.*').length > 0)
+        return Dir.getwd()
+    else
+        if (Dir.getwd() == "/")
+            return "/"
+        else
+            Dir.chdir("../") {
+                get_root_dir(Dir.getwd())
+            }
+        end
+    end
+end
+
+puts get_root_dir(Dir.getwd())
